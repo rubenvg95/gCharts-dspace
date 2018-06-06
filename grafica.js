@@ -57,9 +57,9 @@ function drawChart() {
         if (millis - secondClick > 1000) {
             setTimeout(function () {
                 if (secondClick == 0) {
-                    contenido += ` ${data.getValue(chart.getSelection()[0].row, chart.getSelection()[0].column)}  
-                    ${data.getColumnLabel(chart.getSelection()[0].column)} del año 
-                    ${data.getValue(chart.getSelection()[0].row, 0)}`
+                    contenido += data.getValue(chart.getSelection()[0].row, chart.getSelection()[0].column)
+                    + ' '+  data.getColumnLabel(chart.getSelection()[0].column) + ' del año ' +
+                    data.getValue(chart.getSelection()[0].row, 0);
                     document.getElementById('item-selected').innerHTML = contenido;
                 }
             }, 125);
@@ -74,7 +74,11 @@ function drawChart() {
             console.log('url', url)
             console.log(url.split(pathname)[0])
             window.open(url.split(pathname)[0] +
-                `/simple-search?location=publications&query=&filter_field_1=itemtype&filter_type_1=authority&filter_value_1=${data.getColumnLabel(chart.getSelection()[0].column)}&filtername=dateIssued&filtertype=equals&filterquery=${data.getValue(chart.getSelection()[0].row, 0)}&rpp=10&sort_by=score&order=desc)`);
+                '/simple-search?location=publications&query=&filter_field_1=itemtype&filter_type_1=authority&filter_value_1='
+                +data.getColumnLabel(chart.getSelection()[0].column)
+                +'&filtername=dateIssued&filtertype=equals&filterquery='
+                +data.getValue(chart.getSelection()[0].row, 0)
+                +'&rpp=10&sort_by=score&order=desc');
         } else {
             firstClick = millis;
             secondClick = 0;
