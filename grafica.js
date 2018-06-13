@@ -7,11 +7,16 @@ var graphData = [
         'Western', 'Random', 'Random', 'Random', 'Random', 'Random', 'Random', 'Random'],
     ['2010', 10, 24, 20, 32, 18, 150, 15, 18, 90, 2, 15, 60],
     ['2020', 16, 22, 23, 30, 16, 150, 15, 18, 90, 2, 15, 20],
+    ['2020', 16, 22, 23, 30, 16, 150, 15, 18, 90, 2, 15, 20],
+    ['2020', 16, 22, 23, 30, 16, 150, 15, 18, 90, 2, 15, 20],
+    ['2020', 16, 22, 23, 30, 16, 150, 15, 18, 90, 2, 15, 20],
+    ['2020', 16, 22, 23, 30, 16, 150, 15, 18, 90, 2, 15, 20],
+    ['2020', 16, 22, 23, 30, 16, 150, 15, 18, 90, 2, 15, 20],
+    ['2020', 16, 22, 23, 30, 16, 150, 15, 18, 90, 2, 15, 20],
     ['2030', 28, 19, 29, 30, 12, 150, 15, 18, 10, 2, 15, 2]
 ]
 function drawChart() {
     var data = new google.visualization.arrayToDataTable(graphData);
-    var myHeight = 600;
     var view = new google.visualization.DataView(data);
     var columns = [];
     for (var i = 0; i < graphData[0].length; i++) {
@@ -38,7 +43,6 @@ function drawChart() {
     var options = {
         title: 'Publicaciones por fecha',
         backgroundColor: 'transparent',
-        height: myHeight, width: 1200,
         legend: {
             position: 'top',
             maxLines: 3
@@ -50,6 +54,8 @@ function drawChart() {
     var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
     chart.draw(view, options);
 
+
+
     google.visualization.events.addListener(chart, 'click', function () {
         var date = new Date();
         var millis = date.getTime();
@@ -58,8 +64,8 @@ function drawChart() {
             setTimeout(function () {
                 if (secondClick == 0) {
                     contenido += data.getValue(chart.getSelection()[0].row, chart.getSelection()[0].column)
-                    + ' '+  data.getColumnLabel(chart.getSelection()[0].column) + ' del año ' +
-                    data.getValue(chart.getSelection()[0].row, 0);
+                        + ' ' + data.getColumnLabel(chart.getSelection()[0].column) + ' del año ' +
+                        data.getValue(chart.getSelection()[0].row, 0);
                     document.getElementById('item-selected').innerHTML = contenido;
                 }
             }, 125);
@@ -75,15 +81,18 @@ function drawChart() {
             console.log(url.split(pathname)[0])
             window.open(url.split(pathname)[0] +
                 '/simple-search?location=publications&query=&filter_field_1=itemtype&filter_type_1=authority&filter_value_1='
-                +data.getColumnLabel(chart.getSelection()[0].column)
-                +'&filtername=dateIssued&filtertype=equals&filterquery='
-                +data.getValue(chart.getSelection()[0].row, 0)
-                +'&rpp=10&sort_by=score&order=desc');
+                + data.getColumnLabel(chart.getSelection()[0].column)
+                + '&filtername=dateIssued&filtertype=equals&filterquery='
+                + data.getValue(chart.getSelection()[0].row, 0)
+                + '&rpp=10&sort_by=score&order=desc');
         } else {
             firstClick = millis;
             secondClick = 0;
         }
     });
 
-
 }
+
+$(window).resize(function () {
+    drawChart();
+});
